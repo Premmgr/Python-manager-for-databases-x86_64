@@ -2,15 +2,9 @@
 
 import os, sys, platform
 from datetime import datetime
-import zipfile
-import tarfile
+from env_modules import colors
+from env_modules.environment import var
 
-# var color ------------------------
-RED = "\033[91m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-BLUE = "\033[94m"
-EC = "\033[0m"
 
 # date var
 now = datetime.now()
@@ -23,13 +17,11 @@ minute = now.minute
 # backup var section
 current_path = os.getcwd()
 list_files = os.listdir()
-backup_dest_path = "/data/backup/" # if data partition doesn't exist change it
+posix_backup_dest_path = var("posix_backup_dest_path") # if data partition doesn't exist change it
 backup_count = 9
-local_db_path = "mysql_db"
-mysql_backup_name = "mysql_backup"
-mysq_backup_content = ['mysql_db','static_data']
-postgres_backu_name = "postgres_backup"
-postgres_backu_content= ['postgres_db','static_data']
+local_db_path = "postgres_db"
+static_data_path = "static_data"
+postgres_backup_name = "postgres_backup"
 
 # line generator
 def lines():
@@ -39,15 +31,13 @@ def lines():
 # backup functions
 class backup:
     def linux():
-        print(f'creating backup from {local_db_path} to {backup_dest_path}')
-        os.chdir(backup_dest_path)
-        os.system(f'tar -czf {mysql_backup_name}.{year}{month}{day}.{hour}.{minute}.tar.gz {current_path}/{local_db_path}') 
-        print(f'{GREEN}backup completed{EC}')
+        print(f'creating backup from {local_db_path} to {posix_backup_dest_path}')
+        os.chdir(posix_backup_dest_path)
+        os.system(f'tar -czf {postgres_backup_name}.{year}{month}{day}.{hour}.{minute}.tar.gz {current_path}/{local_db_path} {current_path}/{static_data_path}') 
+        print(f'{colors.green}backup completed{colors.ec}')
     # def windows():
     #     # continue here
-
-        
-
+     
 
 
 # runtime os detector --------------------------------------
@@ -61,15 +51,14 @@ def check_host_os():
 check_host_os()
 
 if "linux" in machine_os:
-    print(f'script is running on linux machine')
+    print(f'{colors.green}script is running on linux machine{colors.ec}')
     lines()
     backup.linux()
 elif "windows" in machine_os:
-    print(f'script is running on windows machine')
+    print(f'{colors.green}script is running on windows machine{colors.ec}')
 else:
-    print(f'script running on unknown os')
+    print(f'{colors.red}script running on unknown os{colors.ec}')
     
     sys.exit(1)
 # end of os detector ----------------------------------------
-
 
