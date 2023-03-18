@@ -1,9 +1,9 @@
-#Usage:
+# Usage:
 
-AVAILABLE OPTIONS:
-NOTE : POSTGRES FUNCTIONS ARE NOT YET READY
+AVAILABLE OPTIONS:  
+NOTE : POSTGRES FUNCTIONS ARE NOT YET READY  
 ----------------------------------------------------------------------------------------------------
-verification:
+```verification:  
     --verify_static         : verifies all the required static files
 ----------------------------------------------------------------------------------------------------
 backup:
@@ -18,7 +18,7 @@ mysql:
     --connect_mysql         : connect to mysql db
     --log_mysql             : follows the mysql contianer's log
     --show_all_db_mysql     : shows all the available db in mysql container db
-    --db_query_mysql        : execute query in db
+    --db_query_mysql        : execute query in db ```
 ----------------------------------------------------------------------------------------------------
 postgres:
     --postgres_help         : prints this help text
